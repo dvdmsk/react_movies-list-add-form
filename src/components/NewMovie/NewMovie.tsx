@@ -18,19 +18,21 @@ export const NewMovie: React.FC<Props> = ({ onAdd = () => {} }) => {
   // Increase the count after successful form submission
   // to reset touched status of all the `Field`s
   const [count, setCount] = useState(0);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [imgUrl, setImgUrl] = useState('');
-  const [imdbUrl, setImdbUrl] = useState('');
-  const [imdbId, setImdbId] = useState('');
+  const [newMovie, setNewMovie] = useState<Movie>({
+    title: '',
+    description: '',
+    imgUrl: '',
+    imdbUrl: '',
+    imdbId: '',
+  });
   // eslint-disable-next-line max-len
   const isValidForm =
-    title.trim() &&
-    imdbUrl.trim() &&
-    imgUrl.trim() &&
-    imdbId.trim() &&
-    validUrl(imdbUrl.trim()) &&
-    validUrl(imgUrl.trim());
+    newMovie.title.trim() &&
+    newMovie.imdbUrl.trim() &&
+    newMovie.imgUrl.trim() &&
+    newMovie.imdbId.trim() &&
+    validUrl(newMovie.imdbUrl.trim()) &&
+    validUrl(newMovie.imgUrl.trim());
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -39,21 +41,23 @@ export const NewMovie: React.FC<Props> = ({ onAdd = () => {} }) => {
       return;
     }
 
-    const newMovie = {
-      title: title.trim(),
-      description: description.trim(),
-      imdbUrl: imdbUrl.trim(),
-      imgUrl: imdbUrl.trim(),
-      imdbId: imdbId.trim(),
+    const movie = {
+      title: newMovie.title.trim(),
+      description: newMovie.description.trim(),
+      imdbUrl: newMovie.imdbUrl.trim(),
+      imgUrl: newMovie.imgUrl.trim(),
+      imdbId: newMovie.imdbId.trim(),
     };
 
-    onAdd(newMovie);
+    onAdd(movie);
 
-    setDescription('');
-    setImdbId('');
-    setImdbUrl('');
-    setImgUrl('');
-    setTitle('');
+    setNewMovie({
+      title: '',
+      description: '',
+      imgUrl: '',
+      imdbUrl: '',
+      imdbId: '',
+    });
     setCount(prev => prev + 1);
   };
 
@@ -64,23 +68,23 @@ export const NewMovie: React.FC<Props> = ({ onAdd = () => {} }) => {
       <TextField
         name="title"
         label="Title"
-        value={title}
-        onChange={setTitle}
+        value={newMovie.title}
+        onChange={setNewMovie}
         required
       />
 
       <TextField
         name="description"
         label="Description"
-        value={description}
-        onChange={setDescription}
+        value={newMovie.description}
+        onChange={setNewMovie}
       />
 
       <TextField
         name="imgUrl"
         label="Image URL"
-        value={imgUrl}
-        onChange={setImgUrl}
+        value={newMovie.imgUrl}
+        onChange={setNewMovie}
         required
         isValid={validUrl}
       />
@@ -88,8 +92,8 @@ export const NewMovie: React.FC<Props> = ({ onAdd = () => {} }) => {
       <TextField
         name="imdbUrl"
         label="Imdb URL"
-        value={imdbUrl}
-        onChange={setImdbUrl}
+        value={newMovie.imdbUrl}
+        onChange={setNewMovie}
         required
         isValid={validUrl}
       />
@@ -97,8 +101,8 @@ export const NewMovie: React.FC<Props> = ({ onAdd = () => {} }) => {
       <TextField
         name="imdbId"
         label="Imdb ID"
-        value={imdbId}
-        onChange={setImdbId}
+        value={newMovie.imdbId}
+        onChange={setNewMovie}
         required
       />
 
