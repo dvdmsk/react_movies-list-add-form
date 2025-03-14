@@ -8,7 +8,7 @@ import { useState } from 'react';
 export const App = () => {
   const [movies, setMovies] = useState([...moviesFromServer]);
   const addMovie = (movie: Movie): void => {
-    setMovies(prev => [movie, ...prev]);
+    setMovies(prev => [...prev, movie]);
   };
 
   return (
