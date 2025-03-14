@@ -25,12 +25,12 @@ export const NewMovie: React.FC<Props> = ({ onAdd = () => {} }) => {
   const [imdbId, setImdbId] = useState('');
   // eslint-disable-next-line max-len
   const isValidForm =
-    title &&
-    imdbUrl &&
-    imgUrl &&
-    imdbId &&
-    validUrl(imdbUrl) &&
-    validUrl(imgUrl);
+    title.trim() &&
+    imdbUrl.trim() &&
+    imgUrl.trim() &&
+    imdbId.trim() &&
+    validUrl(imdbUrl.trim()) &&
+    validUrl(imgUrl.trim());
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -40,11 +40,11 @@ export const NewMovie: React.FC<Props> = ({ onAdd = () => {} }) => {
     }
 
     const newMovie = {
-      title,
-      description,
-      imdbUrl,
-      imgUrl,
-      imdbId,
+      title: title.trim(),
+      description: description.trim(),
+      imdbUrl: imdbUrl.trim(),
+      imgUrl: imdbUrl.trim(),
+      imdbId: imdbId.trim(),
     };
 
     onAdd(newMovie);
@@ -74,7 +74,6 @@ export const NewMovie: React.FC<Props> = ({ onAdd = () => {} }) => {
         label="Description"
         value={description}
         onChange={setDescription}
-        required
       />
 
       <TextField
